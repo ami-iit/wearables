@@ -20,6 +20,7 @@ class IWearWrapper::impl
 {
 public:
     yarp::os::BufferedPort<msg::WearableData> dataPort;
+    yarp::os::BufferedPort<yarp::os::Bottle> jointPositionsPort;
 
     std::string dataPortName;
 
@@ -161,6 +162,7 @@ void IWearWrapper::run()
     }
 
     msg::WearableData& data = pImpl->dataPort.prepare();
+    yarp::os::Bottle& jointPositions = pImpl->jointPositionsPort.prepare();
     data.producerName = pImpl->iWear->getWearableName();
 
     yarp::os::Stamp timestamp = pImpl->iPreciselyTimed->getLastInputStamp();
@@ -434,6 +436,23 @@ void IWearWrapper::run()
 
     // Stream the data though the port
     pImpl->dataPort.write();
+
+    // Stream the joint names and positions
+    jointPositions.clear();
+    for (const auto& sensor : pImpl->virtualJointKinSensors) {
+        jointPositions.addString(sensor->getSensorName());
+    }
+    for (const auto& sensor : pImpl->virtualJointKinSensors) {
+        double jointPos;
+        if (!sensor->getJointPosition(jointPos)) {
+            yWarning() << logPrefix << "[VirtualJointKinSensors] "
+                     << "Failed to read data"
+                     << "sensor status is "
+                     << static_cast<int>(sensor->getSensorStatus());
+            continue;
+        }
+        jointPositions.addFloat64(jointPos);
+    }
 }
 
 // ======================

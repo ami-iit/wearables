@@ -10,6 +10,9 @@
 #include <yarp/dev/IMultipleWrapper.h>
 #include <yarp/os/PeriodicThread.h>
 
+#include <yarp/os/Bottle.h>
+#include <yarp/os/BufferedPort.h>
+
 namespace wearable {
     namespace wrappers {
         class IWearWrapper;

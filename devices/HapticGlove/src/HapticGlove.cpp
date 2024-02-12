@@ -363,11 +363,6 @@ bool HapticGlove::open(yarp::os::Searchable& config)
         return false;
     }
 
-    // open the port for the glove joint positions
-    if (!m_portGloveJoints.open("/" + getWearableName() + "/glove/joints:o")) {
-        yError() << LogPrefix << "Cannot open the port for the glove joint positions.";
-        return false;
-    }
 
     return true;
 }
@@ -575,12 +570,6 @@ void HapticGlove::run()
     // to implement
     m_pImpl->run();
 
-    // get the joint positions and publish them
-    yarp::os::Bottle& bottle = m_portGloveJoints.prepare();
-    bottle.clear();
-    for (size_t i = 0; i < m_pImpl->gloveData.humanJointValues.size(); i++) {
-        bottle.addFloat64(m_pImpl->gloveData.humanJointValues[i]);
-    }
 }
 
 bool HapticGlove::close()
@@ -592,7 +581,6 @@ bool HapticGlove::close()
         return false;
     }
 
-    m_portGloveJoints.close();
     return true;
 }
 

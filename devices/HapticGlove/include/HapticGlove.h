@@ -31,7 +31,6 @@ private:
     class SenseGloveImpl;
     std::unique_ptr<SenseGloveImpl> m_pImpl;
 
-    yarp::os::BufferedPort<yarp::os::Bottle> m_portGloveJoints;
 
 
 
