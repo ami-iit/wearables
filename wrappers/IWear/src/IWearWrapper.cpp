@@ -463,7 +463,6 @@ bool IWearWrapper::open(yarp::os::Searchable& config)
     const double period = config.check("period", yarp::os::Value(DefaultPeriod)).asFloat64();
     setPeriod(period);
 
-    pImpl->jointPositionsPort.open("/wearables/jointPositions:o");
 
     return true;
 }
@@ -499,6 +498,7 @@ bool IWearWrapper::attach(yarp::dev::PolyDriver* poly)
 
     // Open the port for streaming data
     pImpl->dataPort.open(pImpl->dataPortName);
+    pImpl->jointPositionsPort.open("/wearables/jointPositions:o");
 
     // Start the PeriodicThread loop
     if (!start()) {
