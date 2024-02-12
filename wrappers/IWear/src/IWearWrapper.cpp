@@ -169,6 +169,12 @@ void IWearWrapper::run()
     yarp::os::Stamp timestamp = pImpl->iPreciselyTimed->getLastInputStamp();
     pImpl->dataPort.setEnvelope(timestamp);
 
+
+    // publish all joint names in the joint position port
+    for (const auto& sensor : pImpl->virtualJointKinSensors) {
+        jointPositions.addString(sensor->getSensorName());
+    }
+
     {
         for (const auto& sensor : pImpl->accelerometers) {
             wearable::Vector3 vector3;
