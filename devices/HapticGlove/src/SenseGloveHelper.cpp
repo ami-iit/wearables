@@ -245,6 +245,7 @@ bool SenseGloveHelper::getHandLinksPose(Eigen::MatrixXd& measuredValue)
     }
     measuredValue = m_handPose;
 
+
     return true;
 }
 
@@ -528,5 +529,6 @@ bool SenseGloveHelper::close()
 {
     turnOffBuzzMotors();
     turnOffForceFeedback();
+
     return true;
 }

@@ -140,6 +140,8 @@ class senseGlove::SenseGloveHelper
      */
     bool getHandJointsAngles();
 
+
+
 public:
     /**
       Constructor

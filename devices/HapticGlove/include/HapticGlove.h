@@ -12,6 +12,8 @@
 #include <yarp/dev/IPreciselyTimed.h>
 #include <yarp/dev/ISerialDevice.h>
 #include <yarp/os/PeriodicThread.h>
+#include <yarp/os/Bottle.h>
+#include <yarp/os/BufferedPort.h>
 
 namespace wearable {
     namespace devices {
@@ -28,6 +30,10 @@ class wearable::devices::HapticGlove
 private:
     class SenseGloveImpl;
     std::unique_ptr<SenseGloveImpl> m_pImpl;
+
+    yarp::os::BufferedPort<yarp::os::Bottle> m_portGloveJoints;
+
+
 
 public:
     HapticGlove();
