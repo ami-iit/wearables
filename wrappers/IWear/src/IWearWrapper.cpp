@@ -475,12 +475,15 @@ bool IWearWrapper::open(yarp::os::Searchable& config)
     const double period = config.check("period", yarp::os::Value(DefaultPeriod)).asFloat64();
     setPeriod(period);
 
+    pImpl->jointPositionsPort.open("/" + pImpl->dataPortName + "/jointPositions:i");
+
     return true;
 }
 
 bool IWearWrapper::close()
 {
     pImpl->dataPort.close();
+    pImpl->jointPositionsPort.close();
     return true;
 }
 
